@@ -5,6 +5,7 @@ import "./App.css"
 import PizzaForm from "./PizzaForm";
 import * as yup from "yup";
 import schema from "./formSchema";
+import axios from "axios";
 
 
 function App() {
@@ -22,7 +23,7 @@ const initialDisabled = true
 const [formValues, setFormValues] = useState(initialFormValues) 
 const [formErrors, setFormErrors] = useState(initialFormErrors)
 const [disabled, setDisabled] = useState(initialDisabled) 
-
+const [users, setUsers] = useState([]);
 
 const validate = (name, value) => {
   yup.reach(schema, name)
@@ -47,10 +48,14 @@ const formSubmit = () => {
   // postNewFriend(newFriend);
 }
 
-useEffect(() => {
-  
-  schema.isValid(formValues).then(valid => setDisabled(!valid))
-}, [formValues])
+ const handleSubmit = () => {
+    axios.post('https://reqres.in/api/users', formValues)
+    .then(res => {
+      setUsers([ res.data, ...users ])
+    })
+    .catch(err => console.error(err))
+    .finally(() => setFormValues(initialFormValues))
+  }
 
 // axios.post("http://buddies.com/api/friends", newFriend)
 // .then(res => {
@@ -59,6 +64,10 @@ useEffect(() => {
 // .finally(() => setFormValues(initialFormValues))
 // }
  
+const handleChange = (name, value) => {
+  validate(name, value);
+  setFormValues({ ...setFormValues, [name]: value })
+}
 
 return (
     <>
@@ -78,7 +87,7 @@ return (
            <form className="homeBtn" action="/order-pizza">
               <input type="submit" value="Order your Pizza"/>
             </form>
-            <img src="/assets/spacecat.jpg" alt="cat with a piece of pizza on it's head." />
+            <img src="/assets/spacecat.jpg" alt="Cat with a piece of pizza on it's head." />
            </section>
         </Route>
         <Route exact path="/order-pizza">
@@ -87,7 +96,7 @@ return (
         <Route exact path="/pizza">
             <PizzaForm  
             values={formValues}
-            change={inputChange}
+            change={handleChange}
             submit={formSubmit}
             disabled={disabled}
             errors={formErrors}
