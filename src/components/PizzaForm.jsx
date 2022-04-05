@@ -46,7 +46,9 @@ const PizzaForm = (props) => {
             <h2>YUMMMMM</h2>
             <div className='errors'>
           
-          <div>{errors.name}</div>
+          <div>
+              <p>{errors.name}</p>
+              </div>
         
         </div>
         

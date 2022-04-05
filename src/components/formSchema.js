@@ -5,6 +5,10 @@ const formSchema = yup.object().shape({
         .string()
         .trim()
         .min(2, "name must be at least 2 characters"),
+        instructions: yup
+        .string()
+        .trim()
+        .min(2, "instructions must be at least 2 characters"),
         pepperoni: yup.boolean(),
         mushrooms: yup.boolean(),
         cheese: yup.boolean(),
