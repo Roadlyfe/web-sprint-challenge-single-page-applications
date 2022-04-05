@@ -53,7 +53,7 @@ const PizzaForm = (props) => {
         </div>
         
             <form id="pizza-form">
-                <button type="submit">Show me the money!</button><br/><br/>
+            
                 <label>Special Instructions: 
                     <input   
                     value={values.instructions}
@@ -122,6 +122,8 @@ const PizzaForm = (props) => {
             <option value='colossal'>Colossal</option>
           </select>
         </label>
+        <br/><br/>
+        <button type="submit" id="order-button">Order Your Pizza!!</button>
             </form>
 
                 </article>
